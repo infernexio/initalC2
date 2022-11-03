@@ -1,4 +1,4 @@
-# 💫 About Tje Project:
+# 💫 About The Project:
 This project is a basic C2 server, completely written in python<br><br> inorder to use just clone the repository.<br><br> Then edit the host ip and port to match the proper host ip then first run server.py and follow with client.py
 
 <img width="1433" alt="Screen Shot 2022-11-02 at 11 32 59 PM" src="https://user-images.githubusercontent.com/47786532/199644488-38ebe3f1-f63b-486f-8c8a-afcf01403973.png">
