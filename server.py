@@ -1,20 +1,28 @@
+import json
+from mimetypes import init
 import socket
 import threading
 
-ip_adress = '127.0.0.1'
-port_number = 1234
+ip_adress = 'localhost'
+port_number = 9999
 
 THREADS = []
 CMD_INPUT = []
 CMD_OUTPUT = []
 
 def handle_conection(connection, adress):
-    msg = connection.recv(1024).decode()
-    while msg != 'quit':
-        print(msg)
-        connection.send(msg.encode())
-        msg = connection.recv(1024).decode()
-    close_connection(connection)
+   while True:
+        commands=input("cmd>")
+        if commands=='exit':
+            return 0
+        else:
+            commands = bytes(commands, 'utf-8')
+            connection.sendall(commands)
+            out=connection.recv(64000).decode('utf-8')
+            if out=="Dead":
+                return 0
+            else:
+                print(out)
 
 
 def close_connection(connection):
@@ -31,7 +39,12 @@ def init_server():
         t = threading.Thread(target=handle_conection, args=(connection,adress))
         THREADS.append(t)
         t.start()
+        t.join()
+
+
+def main():
+    init_server()
 
 
 if __name__ == "__main__":
-    init_server()
+    main()
